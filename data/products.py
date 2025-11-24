@@ -19,7 +19,7 @@ PRODUCTS = {
             "description": "Прямая кухня с фасадами МДФ, длина 2.5 м",
             "price": "55000",
             "country": "Россия",
-            "images": ["https://example.com/kitchen1_1.jpg"]
+            "images": ["https://frankfurt.apollo.olxcdn.com/v1/files/coazkj6ogymv2-KZ/image"]
         }
     ],
     "kitchen_corner": [],
@@ -31,7 +31,7 @@ PRODUCTS = {
             "description": "Прямой диван, ткань жаккард, 3-х местный",
             "price": "25000",
             "country": "Россия",
-            "images": ["https://example.com/sofa1_1.jpg"]
+            "images": ["https://avatars.mds.yandex.net/i?id=513b0751f2d4239cb50cbbc9acc76bef4038e48d-10734598-images-thumbs&n=13"]
         }
     ],
     "sofa_turkish": [],

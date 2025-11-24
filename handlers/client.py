@@ -149,3 +149,9 @@ async def order_consult(callback: CallbackQuery):
     await callback.answer()
     product_name = callback.data.replace("consult_", "")
     await callback.message.answer(f"Вы выбрали 'Заказать консультацию' по товару {product_name}. Мы свяжемся с вами в ближайшее время.")
+
+
+@router.callback_query(lambda c: c.data == "add_furniture_categories")
+async def process_add_furniture_categories(callback: CallbackQuery):
+    await callback.message.answer(
+        "Выберите категорию мебели, которую хотите добавить:")

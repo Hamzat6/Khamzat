@@ -3,6 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 def main_menu():
     kb = [
+        [InlineKeyboardButton(text="Добавить мебель по категориям", callback_data="add_furniture_categories")],
         [InlineKeyboardButton(text="Спальная мебель", callback_data="category_bedroom")],
         [InlineKeyboardButton(text="Кухонная мебель", callback_data="category_kitchen")],
         [InlineKeyboardButton(text="Мягкая мебель", callback_data="category_sofa")],
