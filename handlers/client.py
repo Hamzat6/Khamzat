@@ -5,6 +5,8 @@ from aiogram.fsm.context import FSMContext
 from keyboards import main_menu, bedroom_menu, kitchen_menu, sofa_menu, product_buttons
 from states import OrderState
 from data.products import PRODUCTS
+from .admin import LEADS
+from data.config import MANAGER_CHAT_ID
 
 router = Router()
 user_history = {}
@@ -128,11 +130,29 @@ async def skip_comment(message: Message, state: FSMContext):
 
 async def finish_order(message: Message, state: FSMContext):
     data = await state.get_data()
-    text = f"Новый заказ:\nИмя: {data['name']}\nТелефон: {data['phone']}\nТовар: {data['product']}\nКомментарий: {data['comment']}"
-    await message.answer("Спасибо. Ваш заказ отправлен.")
-    await message.bot.send_message(-1001234567890, text)
-    await state.clear()
+    text = (
+        f"Новый заказ:\n"
+        f"Имя: {data['name']}\n"
+        f"Телефон: {data['phone']}\n"
+        f"Товар: {data['product']}\n"
+        f"Комментарий: {data['comment']}"
+    )
 
+    # Сохраняем в список лидов
+    LEADS.append({
+        "name": data['name'],
+        "phone": data['phone'],
+        "product": data['product'],
+        "comment": data['comment']
+    })
+
+    # Сообщение клиенту
+    await message.answer("Спасибо. Ваш заказ отправлен.")
+
+    # Отправка менеджеру
+    await message.bot.send_message(MANAGER_CHAT_ID, text)
+
+    await state.clear()
 
 # ========== задать вопрос ==========
 @router.callback_query(F.data.startswith("ask_"))
@@ -149,9 +169,3 @@ async def order_consult(callback: CallbackQuery):
     await callback.answer()
     product_name = callback.data.replace("consult_", "")
     await callback.message.answer(f"Вы выбрали 'Заказать консультацию' по товару {product_name}. Мы свяжемся с вами в ближайшее время.")
-
-
-@router.callback_query(lambda c: c.data == "add_furniture_categories")
-async def process_add_furniture_categories(callback: CallbackQuery):
-    await callback.message.answer(
-        "Выберите категорию мебели, которую хотите добавить:")
